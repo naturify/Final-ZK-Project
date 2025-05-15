@@ -1,0 +1,13 @@
+[package]
+name = "group"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+k256 = "0.13"
+rand = {version="0.8",features=["getrandom"]}
+rand_core = "0.6"
+risc0-zkvm = { version = "1.2.4", default-features = false, features = ['std'] }
+group-core = {path = "../../core"}
