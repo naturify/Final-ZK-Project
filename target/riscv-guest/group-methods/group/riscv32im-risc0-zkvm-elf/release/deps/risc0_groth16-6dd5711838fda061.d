@@ -1,0 +1,9 @@
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/librisc0_groth16-6dd5711838fda061.rmeta: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/data_structures.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/verifier.rs
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/librisc0_groth16-6dd5711838fda061.rlib: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/data_structures.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/verifier.rs
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/risc0_groth16-6dd5711838fda061.d: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/data_structures.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/verifier.rs
+
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/lib.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/data_structures.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-groth16-1.2.4/src/verifier.rs:

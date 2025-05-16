@@ -1,0 +1,10 @@
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/libgroup-1cfe5fb5c097506b.rmeta: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/cofactor.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/prime.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/wnaf.rs
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/libgroup-1cfe5fb5c097506b.rlib: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/cofactor.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/prime.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/wnaf.rs
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/group-1cfe5fb5c097506b.d: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/cofactor.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/prime.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/wnaf.rs
+
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/lib.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/cofactor.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/prime.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/group-0.13.0/src/wnaf.rs:

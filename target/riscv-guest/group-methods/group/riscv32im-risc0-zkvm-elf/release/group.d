@@ -1,0 +1,1 @@
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/group: /Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/core/src/lib.rs /Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/methods/guest/src/main.rs

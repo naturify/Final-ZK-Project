@@ -27,12 +27,6 @@ fn main() -> Result<(), Box<dyn Error>> {
 
    
 
-    // Give the private input to the guest.
-    let input = PrivateInput {
-       
-
-    };
-
     // Make the ExecutorEnv
     let env = ExecutorEnv::builder().write(&input)?.build().unwrap();
 

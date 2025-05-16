@@ -7,7 +7,6 @@ struct UserIdentity {
     current_internal_nonce: u128, // Object's own internal nonce, part of its state
 }
 
-
 fn calculate_commitment<T: Serialize>(
     object_to_commit: &T, // The object whose state is being committed
     external_commitment_randomness: u128, // The randomness (nonce) for this specific commitment
@@ -28,6 +27,7 @@ fn calculate_commitment<T: Serialize>(
     let result = hasher.finalize();
     Ok(<[u8; 32]>::try_from(result.as_slice()).expect("SHA-256 output should be 32 bytes"))
 }
+
 
 
 
@@ -92,4 +92,50 @@ impl UserIdentity {
 
         todo!();
     }
+}
+
+
+
+
+
+
+
+
+
+/// Private input values to used to prove the signature verifies for one of the verification keys
+#[derive(Debug, Serialize, Deserialize)]
+pub struct PrivateInput {
+    // Private
+    pub msg: Vec<u8>,
+    pub msg_sig: Vec<u8>,
+    pub index: usize,
+
+    pub group_keys: [Vec<u8>; 5],
+    pub sig_of_group_keys: [Vec<u8>; 5],
+
+    // Public
+    pub manager_key: Vec<u8>,
+}
+
+/// Public journal values that will be committed by signature validity.
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Journal {
+    pub manager_key: Vec<u8>,
+}
+
+
+fn register_user(
+    user: &UserIdentity,
+    server_vk: &VerifyingKey,        // known ahead of time or fetched out-of-band
+    server_sk: &SigningKey,           // only on the *server* side!
+) -> (u128, [u8;32], Signature) {
+    // 1) client picks external randomness
+    let ext_rand: u128 = rng().random();
+    // 2) client computes its commitment
+    let commit = calculate_commitment(user, ext_rand)
+        .expect("serialize+hash must succeed");
+    // 3) server signs it (in reality over the network)
+    let sig = server_sk.sign(&commit);
+    // 4) server sends you back sig (and you already have vk)
+    (ext_rand, commit, sig)
 }

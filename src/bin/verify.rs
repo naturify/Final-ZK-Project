@@ -29,7 +29,20 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let journal: Journal = receipt.journal.decode()?;
 
-   
+    let ext_manager_key: Vec<u8> = bincode::deserialize(&fs::read(&args.key_file)?)?;
 
+    assert_eq!(journal.manager_key, ext_manager_key, "Manager key in the journal does not match the external signature");
+
+
+    //TODO: Initialize your signature with what is read from signature.bin
+    // with something like "= bincode::deserialize(&fs::read(&args.key_file)?)?;"
+
+    //************************************YOUR CODE STARTS HERE************************************
+
+    // TODO: Check the consistency of whatever signature received in Journal is the same as in the signature.bin
+
+    //*************************************YOUR CODE ENDS HERE*************************************
+
+    println!("Successfully verified the proof of signature",);
     Ok(())
 }

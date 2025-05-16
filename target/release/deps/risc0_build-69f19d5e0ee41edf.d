@@ -1,0 +1,10 @@
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/release/deps/librisc0_build-69f19d5e0ee41edf.rmeta: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/config.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/docker.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/../README.md
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/release/deps/librisc0_build-69f19d5e0ee41edf.rlib: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/config.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/docker.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/../README.md
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/release/deps/risc0_build-69f19d5e0ee41edf.d: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/config.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/docker.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/../README.md
+
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/lib.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/config.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/docker.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-build-1.2.4/src/../README.md:

@@ -1,0 +1,9 @@
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/libark_crypto_primitives-52a6c830d9168d63.rmeta: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/macros.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/snark/mod.rs
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/libark_crypto_primitives-52a6c830d9168d63.rlib: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/macros.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/snark/mod.rs
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/riscv-guest/group-methods/group/riscv32im-risc0-zkvm-elf/release/deps/ark_crypto_primitives-52a6c830d9168d63.d: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/macros.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/snark/mod.rs
+
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/lib.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/macros.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/ark-crypto-primitives-0.4.0/src/snark/mod.rs:

@@ -1,0 +1,10 @@
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/release/deps/librisc0_core-517bb1375722a3fa.rmeta: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/mod.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/baby_bear.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/goldilocks.rs
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/release/deps/librisc0_core-517bb1375722a3fa.rlib: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/mod.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/baby_bear.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/goldilocks.rs
+
+/Users/nahomamanuel/Downloads/CMSC498C_25_HW3_new/group-signature/target/release/deps/risc0_core-517bb1375722a3fa.d: /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/lib.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/mod.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/baby_bear.rs /Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/goldilocks.rs
+
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/lib.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/mod.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/baby_bear.rs:
+/Users/nahomamanuel/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-core-1.2.4/src/field/goldilocks.rs:
