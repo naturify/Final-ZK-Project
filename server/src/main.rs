@@ -8,11 +8,13 @@ use std::{io::Write, fs::File, collections::HashMap, path::Path};
 use std::io::Read;
 use sha2::{Sha256, Digest};
 use group_core::UserIdentity;
+use chrono::{DateTime, Utc};
 
 struct AppState {
     signing_key: Mutex<SigningKey>,
     verifying_key: Mutex<VerifyingKey>,
     callback_ledger: Mutex<HashMap<u128, String>>,
+    posts: Mutex<Vec<Post>>,
 }
 
 #[derive(Deserialize)]
@@ -37,6 +39,28 @@ struct AddTicketRequest {
 #[derive(Serialize, Deserialize)]
 struct CallbackLedger {
     entries: HashMap<u128, String>,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+struct Post {
+    id: u64,
+    ticket: u128,
+    title: String,
+    content: String,
+    timestamp: DateTime<Utc>,
+    likes: i32,
+}
+
+#[derive(Serialize, Deserialize)]
+struct PostList {
+    posts: Vec<Post>,
+}
+
+#[derive(Deserialize)]
+struct CreatePostRequest {
+    ticket: u128,
+    title: String,
+    content: String,
 }
 
 fn calculate_commitment(
@@ -98,6 +122,53 @@ fn load_callback_ledger() -> HashMap<u128, String> {
         Err(e) => {
             error!("Failed to open callback ledger file: {}", e);
             HashMap::new()
+        }
+    }
+}
+
+// Save posts to a file
+fn save_posts(posts: &Vec<Post>) -> std::io::Result<()> {
+    let post_list = PostList {
+        posts: posts.clone(),
+    };
+    
+    let json = serde_json::to_string_pretty(&post_list)?;
+    let mut file = File::create("posts.json")?;
+    file.write_all(json.as_bytes())?;
+    
+    info!("Posts saved to posts.json");
+    Ok(())
+}
+
+// Load posts from a file
+fn load_posts() -> Vec<Post> {
+    if !Path::new("posts.json").exists() {
+        info!("No posts file found, creating an empty one");
+        return Vec::new();
+    }
+    
+    match File::open("posts.json") {
+        Ok(mut file) => {
+            let mut contents = String::new();
+            if file.read_to_string(&mut contents).is_err() {
+                error!("Failed to read posts file");
+                return Vec::new();
+            }
+            
+            match serde_json::from_str::<PostList>(&contents) {
+                Ok(post_list) => {
+                    info!("Loaded {} posts", post_list.posts.len());
+                    post_list.posts
+                },
+                Err(e) => {
+                    error!("Failed to parse posts: {}", e);
+                    Vec::new()
+                }
+            }
+        },
+        Err(e) => {
+            error!("Failed to open posts file: {}", e);
+            Vec::new()
         }
     }
 }
@@ -201,6 +272,64 @@ async fn scan_user(
     }
 }
 
+#[post("/create_post")]
+async fn create_post(
+    data: web::Data<AppState>,
+    req: web::Json<CreatePostRequest>,
+) -> HttpResponse {
+    info!("Creating new post with ticket {}", req.ticket);
+    
+    // Check if the ticket is in the callback ledger
+    {
+        let ledger = data.callback_ledger.lock().unwrap();
+        if ledger.contains_key(&req.ticket) {
+            return HttpResponse::Forbidden().json("This ticket is banned and cannot be used to create posts");
+        }
+    }
+    
+    let mut posts = data.posts.lock().unwrap();
+    
+    // Generate a post ID
+    let post_id = if posts.is_empty() {
+        1
+    } else {
+        posts.iter().map(|p| p.id).max().unwrap_or(0) + 1
+    };
+    
+    // Create the new post
+    let new_post = Post {
+        id: post_id,
+        ticket: req.ticket,
+        title: req.title.clone(),
+        content: req.content.clone(),
+        timestamp: Utc::now(),
+        likes: 0,
+    };
+    
+    posts.push(new_post.clone());
+    
+    // Save the updated posts
+    if let Err(e) = save_posts(&posts) {
+        error!("Failed to save posts: {}", e);
+        return HttpResponse::InternalServerError().json("Failed to save posts");
+    }
+    
+    HttpResponse::Ok().json(new_post)
+}
+
+#[get("/posts")]
+async fn get_posts(data: web::Data<AppState>) -> HttpResponse {
+    info!("Request to view all posts");
+    
+    let posts = data.posts.lock().unwrap();
+    
+    // Sort posts by timestamp (newest first)
+    let mut sorted_posts = posts.clone();
+    sorted_posts.sort_by(|a, b| b.timestamp.cmp(&a.timestamp));
+    
+    HttpResponse::Ok().json(sorted_posts)
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
@@ -214,13 +343,18 @@ async fn main() -> std::io::Result<()> {
     let callback_ledger = load_callback_ledger();
     info!("Loaded callback ledger with {} entries", callback_ledger.len());
     
+    // Load posts
+    let posts = load_posts();
+    info!("Loaded {} posts", posts.len());
+    
     let app_state = web::Data::new(AppState {
         signing_key: Mutex::new(signing_key),
         verifying_key: Mutex::new(verifying_key),
         callback_ledger: Mutex::new(callback_ledger),
+        posts: Mutex::new(posts),
     });
     
-    info!("Starting server on 127.0.0.1:8081");
+    info!("Starting server on 127.0.0.1:8080");
     
     HttpServer::new(move || {
         App::new()
@@ -230,8 +364,10 @@ async fn main() -> std::io::Result<()> {
             .service(add_to_ledger)
             .service(get_ledger)
             .service(scan_user)
+            .service(create_post)
+            .service(get_posts)
     })
-    .bind("127.0.0.1:8081")?
+    .bind("127.0.0.1:8080")?
     .run()
     .await
 }

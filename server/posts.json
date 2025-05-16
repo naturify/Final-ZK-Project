@@ -1,0 +1,12 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "ticket": 215503180822272076521469923132273991844,
+      "title": "My First Post",
+      "content": "This is a test post using anonymous tickets!",
+      "timestamp": "2025-05-16T04:56:13.892147Z",
+      "likes": 0
+    }
+  ]
+}
