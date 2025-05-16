@@ -1,0 +1,10 @@
+/Users/namanuel11/Desktop/Final ZK Project/target/debug/deps/librisc0_zkvm_platform-f605c44f0bd9c395.rmeta: /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/lib.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/memory.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/syscall.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/../README.md
+
+/Users/namanuel11/Desktop/Final ZK Project/target/debug/deps/librisc0_zkvm_platform-f605c44f0bd9c395.rlib: /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/lib.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/memory.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/syscall.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/../README.md
+
+/Users/namanuel11/Desktop/Final ZK Project/target/debug/deps/risc0_zkvm_platform-f605c44f0bd9c395.d: /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/lib.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/memory.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/syscall.rs /Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/../README.md
+
+/Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/lib.rs:
+/Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/memory.rs:
+/Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/syscall.rs:
+/Users/namanuel11/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/risc0-zkvm-platform-1.2.4/src/../README.md:

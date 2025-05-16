@@ -3,6 +3,14 @@ name = "group"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+members = [
+    "core",
+    "methods",
+    "server",
+    "client",
+]
+
 [build-dependencies]
 risc0-build = { version = "1.2.4" }
 

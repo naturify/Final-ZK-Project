@@ -1,4 +1,14 @@
 use serde::{Deserialize, Serialize};
+use sha2::{Sha256, Digest};
+use std::collections::HashMap;
+use k256::ecdsa::{SigningKey, VerifyingKey, Signature, signature::Signer};
+use rand::Rng;
+use rand::rngs::OsRng;
+
+// Helper function to generate a random u128
+fn rng() -> impl Rng {
+    OsRng
+}
 
 #[derive(Debug, Clone, Serialize)] // Added Serialize, Clone is for easier state snapshotting
 struct UserIdentity {
@@ -43,7 +53,7 @@ impl UserIdentity {
 
     // Method for the user to randomerate a new ticket number for an action
     fn randomerate_ticket(&mut self) -> u128 {
-        let new_ticket: u128 = rng().random();
+        let new_ticket: u128 = rng().gen();
         self.tickets.push(new_ticket);
         new_ticket
     }
@@ -81,11 +91,11 @@ impl UserIdentity {
     // Implements the authenticated update logic based on the provided pseudocode
     pub fn process_authenticated_object_update<V>(
         &mut self,
-        committed_object_hash_from_server: [u8; 32],
+        _committed_object_hash_from_server: [u8; 32],
         _signature_from_server: &Signature,            // Placeholder
-        old_external_commitment_randomness: u128, // Randomness used for the server's commitment
-        new_external_commitment_randomness: u128, // New randomness for the new commitment
-        callback_ledger: &HashMap<u128, V>,
+        _old_external_commitment_randomness: u128, // Randomness used for the server's commitment
+        _new_external_commitment_randomness: u128, // New randomness for the new commitment
+        _callback_ledger: &HashMap<u128, V>,
         _vk_server: &SigningKey, // Placeholder for server's verification key
     ) -> Result<(u128, [u8; 32], u128), String> {
         // Returns (new_ticket, new_commitment_hash, old_object_internal_nonce)
@@ -103,34 +113,16 @@ impl UserIdentity {
 
 
 /// Private input values to used to prove the signature verifies for one of the verification keys
-#[derive(Debug, Serialize, Deserialize)]
-pub struct PrivateInput {
-    // Private
-    pub msg: Vec<u8>,
-    pub msg_sig: Vec<u8>,
-    pub index: usize,
 
-    pub group_keys: [Vec<u8>; 5],
-    pub sig_of_group_keys: [Vec<u8>; 5],
-
-    // Public
-    pub manager_key: Vec<u8>,
-}
-
-/// Public journal values that will be committed by signature validity.
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Journal {
-    pub manager_key: Vec<u8>,
-}
 
 
 fn register_user(
     user: &UserIdentity,
-    server_vk: &VerifyingKey,        // known ahead of time or fetched out-of-band
+    _server_vk: &VerifyingKey,        // known ahead of time or fetched out-of-band
     server_sk: &SigningKey,           // only on the *server* side!
 ) -> (u128, [u8;32], Signature) {
     // 1) client picks external randomness
-    let ext_rand: u128 = rng().random();
+    let ext_rand: u128 = rng().gen();
     // 2) client computes its commitment
     let commit = calculate_commitment(user, ext_rand)
         .expect("serialize+hash must succeed");

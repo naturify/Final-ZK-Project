@@ -1,0 +1,15 @@
+[package]
+name = "client"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1.45", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+k256 = { version = "0.13", features = ["ecdsa"] }
+rand = { version = "0.8", features = ["getrandom"] }
+sha2 = "0.10"
+group-core = { path = "../core" }
+clap = { version = "4.5", features = ["derive"] }
