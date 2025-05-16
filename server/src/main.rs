@@ -1,15 +1,18 @@
-use actix_web::{web, App, HttpServer, HttpResponse, post, middleware::Logger};
+use actix_web::{web, App, HttpServer, HttpResponse, post, get, middleware::Logger};
 use k256::ecdsa::{SigningKey, VerifyingKey, signature::Signer, Signature};
-use log::info;
+use log::{info, warn, error};
 use rand_core::OsRng;
 use serde::{Serialize, Deserialize};
 use std::sync::Mutex;
-use std::{io::Write, fs::File};
+use std::{io::Write, fs::File, collections::HashMap, path::Path};
+use std::io::Read;
 use sha2::{Sha256, Digest};
+use group_core::UserIdentity;
 
 struct AppState {
     signing_key: Mutex<SigningKey>,
     verifying_key: Mutex<VerifyingKey>,
+    callback_ledger: Mutex<HashMap<u128, String>>,
 }
 
 #[derive(Deserialize)]
@@ -23,6 +26,17 @@ struct RegistrationResponse {
     commit: [u8; 32],
     signature: Vec<u8>,
     verifying_key: Vec<u8>,
+}
+
+#[derive(Deserialize)]
+struct AddTicketRequest {
+    ticket: u128,
+    reason: String,
+}
+
+#[derive(Serialize, Deserialize)]
+struct CallbackLedger {
+    entries: HashMap<u128, String>,
 }
 
 fn calculate_commitment(
@@ -39,6 +53,53 @@ fn calculate_commitment(
     // Finalize the hash
     let result = hasher.finalize();
     <[u8; 32]>::try_from(result.as_slice()).expect("SHA-256 output should be 32 bytes")
+}
+
+// Save the callback ledger to a file
+fn save_callback_ledger(ledger: &HashMap<u128, String>) -> std::io::Result<()> {
+    let callback_ledger = CallbackLedger {
+        entries: ledger.clone(),
+    };
+    
+    let json = serde_json::to_string_pretty(&callback_ledger)?;
+    let mut file = File::create("callback_ledger.json")?;
+    file.write_all(json.as_bytes())?;
+    
+    info!("Callback ledger saved to callback_ledger.json");
+    Ok(())
+}
+
+// Load the callback ledger from a file
+fn load_callback_ledger() -> HashMap<u128, String> {
+    if !Path::new("callback_ledger.json").exists() {
+        info!("No callback ledger found, creating an empty one");
+        return HashMap::new();
+    }
+    
+    match File::open("callback_ledger.json") {
+        Ok(mut file) => {
+            let mut contents = String::new();
+            if file.read_to_string(&mut contents).is_err() {
+                error!("Failed to read callback ledger file");
+                return HashMap::new();
+            }
+            
+            match serde_json::from_str::<CallbackLedger>(&contents) {
+                Ok(ledger) => {
+                    info!("Loaded callback ledger with {} entries", ledger.entries.len());
+                    ledger.entries
+                },
+                Err(e) => {
+                    error!("Failed to parse callback ledger: {}", e);
+                    HashMap::new()
+                }
+            }
+        },
+        Err(e) => {
+            error!("Failed to open callback ledger file: {}", e);
+            HashMap::new()
+        }
+    }
 }
 
 #[post("/register")]
@@ -73,6 +134,73 @@ async fn register(
     HttpResponse::Ok().json(response)
 }
 
+#[post("/add_to_ledger")]
+async fn add_to_ledger(
+    data: web::Data<AppState>,
+    req: web::Json<AddTicketRequest>,
+) -> HttpResponse {
+    info!("Adding ticket {} to callback ledger", req.ticket);
+    
+    let mut ledger = data.callback_ledger.lock().unwrap();
+    ledger.insert(req.ticket, req.reason.clone());
+    
+    // Save the updated ledger
+    if let Err(e) = save_callback_ledger(&ledger) {
+        error!("Failed to save callback ledger: {}", e);
+        return HttpResponse::InternalServerError().json("Failed to save callback ledger");
+    }
+    
+    HttpResponse::Ok().json("Ticket added to callback ledger")
+}
+
+#[get("/ledger")]
+async fn get_ledger(data: web::Data<AppState>) -> HttpResponse {
+    info!("Request to view callback ledger");
+    
+    let ledger = data.callback_ledger.lock().unwrap();
+    let entries = ledger.clone();
+    
+    HttpResponse::Ok().json(entries)
+}
+
+#[derive(Deserialize)]
+struct ScanRequest {
+    user_data: Vec<u8>,
+}
+
+#[post("/scan_user")]
+async fn scan_user(
+    data: web::Data<AppState>,
+    req: web::Json<ScanRequest>,
+) -> HttpResponse {
+    info!("Scanning user for callback ledger entries");
+    
+    // Parse the user data
+    let user: UserIdentity = match serde_json::from_slice(&req.user_data) {
+        Ok(user) => user,
+        Err(e) => {
+            error!("Failed to parse user data: {}", e);
+            return HttpResponse::BadRequest().json("Invalid user data");
+        }
+    };
+    
+    // Check if user's tickets are in the ledger
+    let ledger = data.callback_ledger.lock().unwrap();
+    let mut matching_tickets = Vec::new();
+    
+    for ticket in &user.tickets {
+        if ledger.contains_key(ticket) {
+            matching_tickets.push((*ticket, ledger.get(ticket).unwrap().clone()));
+        }
+    }
+    
+    if matching_tickets.is_empty() {
+        HttpResponse::Ok().json("User has no tickets in the callback ledger")
+    } else {
+        HttpResponse::Ok().json(matching_tickets)
+    }
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
@@ -82,20 +210,28 @@ async fn main() -> std::io::Result<()> {
     // Generate or load server keys
     let (signing_key, verifying_key) = generate_or_load_keys()?;
     
+    // Load the callback ledger
+    let callback_ledger = load_callback_ledger();
+    info!("Loaded callback ledger with {} entries", callback_ledger.len());
+    
     let app_state = web::Data::new(AppState {
         signing_key: Mutex::new(signing_key),
         verifying_key: Mutex::new(verifying_key),
+        callback_ledger: Mutex::new(callback_ledger),
     });
     
-    info!("Starting server on 127.0.0.1:8080");
+    info!("Starting server on 127.0.0.1:8081");
     
     HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
             .app_data(app_state.clone())
             .service(register)
+            .service(add_to_ledger)
+            .service(get_ledger)
+            .service(scan_user)
     })
-    .bind("127.0.0.1:8080")?
+    .bind("127.0.0.1:8081")?
     .run()
     .await
 }

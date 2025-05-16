@@ -10,14 +10,15 @@ fn rng() -> impl Rng {
     OsRng
 }
 
-#[derive(Debug, Clone, Serialize)] // Added Serialize, Clone is for easier state snapshotting
-struct UserIdentity {
-    is_banned: bool,
-    tickets: Vec<u128>,
-    current_internal_nonce: u128, // Object's own internal nonce, part of its state
+#[derive(Debug, Clone, Serialize, Deserialize)] // Added Serialize, Clone is for easier state snapshotting
+pub struct UserIdentity {
+    pub name: String,
+    pub is_banned: bool,
+    pub tickets: Vec<u128>,
+    pub current_internal_nonce: u128, // Object's own internal nonce, part of its state
 }
 
-fn calculate_commitment<T: Serialize>(
+pub fn calculate_commitment<T: Serialize>(
     object_to_commit: &T, // The object whose state is being committed
     external_commitment_randomness: u128, // The randomness (nonce) for this specific commitment
 ) -> Result<[u8; 32], String> {
@@ -38,13 +39,11 @@ fn calculate_commitment<T: Serialize>(
     Ok(<[u8; 32]>::try_from(result.as_slice()).expect("SHA-256 output should be 32 bytes"))
 }
 
-
-
-
 impl UserIdentity {
     // Constructor to create a new UserIdentity with an initial internal nonce
-    fn new(initial_internal_nonce: u128) -> Self {
+    pub fn new(initial_internal_nonce: u128) -> Self {
         UserIdentity {
+            name: String::new(),
             is_banned: false,
             tickets: Vec::new(),
             current_internal_nonce: initial_internal_nonce,
@@ -52,21 +51,21 @@ impl UserIdentity {
     }
 
     // Method for the user to randomerate a new ticket number for an action
-    fn randomerate_ticket(&mut self) -> u128 {
+    pub fn randomerate_ticket(&mut self) -> u128 {
         let new_ticket: u128 = rng().gen();
         self.tickets.push(new_ticket);
         new_ticket
     }
 
     // Method to check if the user's identity is not currently banned
-    fn check_not_banned(&self) -> bool {
+    pub fn check_not_banned(&self) -> bool {
         !self.is_banned
     }
 
     // Method to scan the callbackLedger for the user's tickets.
     // If a ticket is found on the ledger, it implies the action associated with that ticket
     // has been linked back to the user, leading to a ban.
-    fn scan_callback_ledger<V>(&mut self, callback_ledger: &HashMap<u128, V>) {
+    pub fn scan_callback_ledger<V>(&mut self, callback_ledger: &HashMap<u128, V>) {
         if self.tickets.is_empty() {
             return;
         }
@@ -79,12 +78,12 @@ impl UserIdentity {
     }
 
     // Method to mark the user's identity as banned
-    fn ban_identity(&mut self) {
+    pub fn ban_identity(&mut self) {
         self.is_banned = true;
     }
 
     // Method to unban a user's identity
-    fn unban_identity(&mut self) {
+    pub fn unban_identity(&mut self) {
         self.is_banned = false;
     }
 
@@ -104,17 +103,7 @@ impl UserIdentity {
     }
 }
 
-
-
-
-
-
-
-
-
 /// Private input values to used to prove the signature verifies for one of the verification keys
-
-
 
 fn register_user(
     user: &UserIdentity,
